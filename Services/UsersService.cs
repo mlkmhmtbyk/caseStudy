@@ -14,57 +14,86 @@ namespace caseStudy.Services
     {
         private readonly DataContext _context;
         private IConfiguration _config;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly Logger _logger;
 
-        public UsersService(IConfiguration config, DataContext context, IHttpContextAccessor httpContextAccessor)
+        public UsersService(IConfiguration config, DataContext context, Logger logger)
         {
             _config = config;
             _context = context;
-            _httpContextAccessor = httpContextAccessor;
-            
+            _logger = logger;
         }
         
         public (User, string) Login(string username, string password)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Username == username && u.Password == password);
-            if (user != null)
-            {
-                user.IsActive = true;
-                _context.SaveChanges();
-                var token = GenerateToken();
-                return (user, token);
+            try{
+                var user = _context.Users.FirstOrDefault(u => u.Username == username && u.Password == password);
+                if (user != null)
+                {
+                    user.IsActive = true;
+                    _context.SaveChanges();
+                    var token = GenerateToken();
+                    return (user, token);
+                }
+                else 
+                {
+                    _logger.Log("User not found");
+                    throw new Exception("User not found");
+                }
             }
-            else 
+            catch (Exception ex)
             {
-                throw new Exception("User not found");
+                _logger.Log($"An error occurred while logging in: {ex.Message}");
+                throw;
             }
+            
         }
 
         public void Logout(string username)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Username == username);
-            if (user != null)
+            try
             {
-                user.IsActive = false;
-                _context.SaveChanges();                
+                var user = _context.Users.FirstOrDefault(u => u.Username == username);
+                    if (user != null)
+                    {
+                        user.IsActive = false;
+                        _context.SaveChanges();                
+                    }
+                    
+                    else
+                    {
+                        _logger.Log("User not found");
+                        throw new Exception("User not found");
+                    }
             }
-            else throw new Exception("User not found");
+            catch (Exception ex)
+            {
+                _logger.Log($"An error occurred while logging out: {ex.Message}");
+                throw;
+            }
+            
         }
 
         private string GenerateToken()
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-            var Sectoken = new JwtSecurityToken(_config["Jwt:Issuer"],
-              _config["Jwt:Issuer"],
-              null,
-              expires: DateTime.Now.AddMinutes(300),
-              signingCredentials: credentials);
+            try
+            {
+                var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+                var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+                var Sectoken = new JwtSecurityToken(_config["Jwt:Issuer"],
+                _config["Jwt:Issuer"],
+                null,
+                expires: DateTime.Now.AddMinutes(300),
+                signingCredentials: credentials);
 
-            var token =  new JwtSecurityTokenHandler().WriteToken(Sectoken);
+                var token =  new JwtSecurityTokenHandler().WriteToken(Sectoken);
 
-            return token;
-
+                return token;
+            }
+            catch (Exception ex)
+            {
+                _logger.Log($"An error occurred while generating token: {ex.Message}");
+                throw;
+            }
         }
     }
 }

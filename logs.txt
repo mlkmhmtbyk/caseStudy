@@ -1,0 +1,10 @@
+17/09/2024 17:59:10 - Getting exercises
+17/09/2024 18:22:38 - Getting exercises
+17/09/2024 18:22:59 - Exercise with id 1 not found
+17/09/2024 18:23:00 - An error occurred while getting exercise with id 1: Exercise with id 1 not found
+17/09/2024 18:24:24 - Exercise with id 1 not found
+17/09/2024 18:24:24 - An unexpected error occurred while deleting exercise with id 1: Exercise with id 1 not found
+17/09/2024 18:24:31 - Getting exercises
+17/09/2024 18:26:43 - Getting exercises
+17/09/2024 18:32:54 - User not found
+17/09/2024 18:32:54 - An error occurred while logging in: User not found

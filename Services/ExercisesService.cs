@@ -1,44 +1,65 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Common;
 using System.Linq;
-using System.Threading.Tasks;
 using caseStudy.Data;
 using caseStudy.Data.Models;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace caseStudy.Services
 {
     public class ExercisesService
     {
         private readonly DataContext _context;
-        private readonly ILogger _logger;
+        private readonly Logger _logger;
 
-        public ExercisesService(DataContext context, ILogger<ExercisesService> logger)
+        public ExercisesService(DataContext context, Logger logger)
         {
             _context = context;
             _logger = logger;
         }
 
         public List<Exercise> GetExercises() {
-            _logger.LogInformation("Getting exercises");
-            return _context.Exercises.ToList();
+            try
+            {
+                _logger.Log("Getting exercises");
+                return _context.Exercises.ToList();
+            }
+            catch (DbException ex)
+            {
+                _logger.Log($"An error occurred while getting exercises: {ex.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.Log($"An unexpected error occurred while getting exercises: {ex.Message}");
+                throw;
+            }
         }
 
         public Exercise GetExercisesByExerciseId(int exerciseId) {
-
-            var _exercise = _context.Exercises.Find(exerciseId);
-            if(_exercise != null) {
-                return _exercise;
-            }else {
-                throw new InvalidOperationException($"Exercise with id {exerciseId} not found");
+            try
+            {
+                var _exercise = _context.Exercises.Find(exerciseId);
+                if(_exercise != null) {
+                    return _exercise;
+                }else {
+                    _logger.Log($"Exercise with id {exerciseId} not found");
+                    throw new InvalidOperationException($"Exercise with id {exerciseId} not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Log($"An error occurred while getting exercise with id {exerciseId}: {ex.Message}");
+                throw;
             }
         }
 
         public Exercise AddExercise(string createdBy, Exercise exercise) {
             try
             {
-                
                 var _exercise = new Exercise()
                 {
                     ExerciseName = exercise.ExerciseName,
@@ -75,28 +96,51 @@ namespace caseStudy.Services
 
         public Exercise UpdateExercise(int exerciseId, string updatedBy, Exercise exercise)
         {
-            var _exercise = _context.Exercises.Find(exerciseId);
-            if(_exercise != null) {
-                _exercise.ExerciseName = exercise.ExerciseName;
-                _exercise.CreatedBy = _exercise.CreatedBy;
-                _exercise.LastUpdatedBy = updatedBy;
-                _exercise.Duration = exercise.Duration;
-                _exercise.LastUpdatedAt = DateTime.Now;
-                _context.SaveChanges();
-            }else {
-                throw new InvalidOperationException($"Exercise with id {exerciseId} not found");
+            try
+            {
+                var _exercise = _context.Exercises.Find(exerciseId);
+                if(_exercise != null) {
+                    _exercise.ExerciseName = exercise.ExerciseName;
+                    _exercise.CreatedBy = _exercise.CreatedBy;
+                    _exercise.LastUpdatedBy = updatedBy;
+                    _exercise.Duration = exercise.Duration;
+                    _exercise.LastUpdatedAt = DateTime.Now;
+                    _context.SaveChanges();
+                }else {
+                    _logger.Log($"Exercise with id {exerciseId} not found");
+                    throw new InvalidOperationException($"Exercise with id {exerciseId} not found");
+                }
+                return _exercise;
             }
-            return _exercise;
+            catch (Exception ex)
+            {
+                _logger.Log($"An error occurred while updating exercise with id {exerciseId}: {ex.Message}");
+                throw;
+            }
         }
 
         public void DeleteExercise(int exerciseId)
         {
-            var _exercise = _context.Exercises.Find(exerciseId);
-            if(_exercise != null) {
-                _context.Exercises.Remove(_exercise);
-                _context.SaveChanges();
-            }else {
-                throw new InvalidOperationException($"Exercise with id {exerciseId} not found");
+            try
+            {
+                var _exercise = _context.Exercises.Find(exerciseId);
+                if(_exercise != null) {
+                    _context.Exercises.Remove(_exercise);
+                    _context.SaveChanges();
+                }else {
+                     _logger.Log($"Exercise with id {exerciseId} not found");
+                    throw new InvalidOperationException($"Exercise with id {exerciseId} not found");
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                _logger.Log($"An error occurred while deleting exercise with id {exerciseId}: {ex.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.Log($"An unexpected error occurred while deleting exercise with id {exerciseId}: {ex.Message}");
+                throw;
             }
         }
     }
