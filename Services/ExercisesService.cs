@@ -25,23 +25,7 @@ namespace caseStudy.Services
             _configuration = configuration;
         }
 
-        // public List<Exercise> GetExercises() {
-        //     try
-        //     {
-        //         _logger.Log("Getting exercises");
-        //         return _context.Exercises.ToList();
-        //     }
-        //     catch (DbException ex)
-        //     {
-        //         _logger.Log($"An error occurred while getting exercises: {ex.Message}");
-        //         throw;
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         _logger.Log($"An unexpected error occurred while getting exercises: {ex.Message}");
-        //         throw;
-        //     }
-        // }
+        
         public async Task<List<Exercise>> GetExercisesAsync()
         {
             string? connectionString = _configuration.GetConnectionString("DefaultConnection");
@@ -91,23 +75,6 @@ namespace caseStudy.Services
             return exercises;
         }
 
-        // public Exercise GetExercisesByExerciseId(int exerciseId) {
-        //     try
-        //     {
-        //         var _exercise = _context.Exercises.Find(exerciseId);
-        //         if(_exercise != null) {
-        //             return _exercise;
-        //         }else {
-        //             _logger.Log($"Exercise with id {exerciseId} not found");
-        //             throw new InvalidOperationException($"Exercise with id {exerciseId} not found");
-        //         }
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         _logger.Log($"An error occurred while getting exercise with id {exerciseId}: {ex.Message}");
-        //         throw;
-        //     }
-        // }
 
         public async Task<Exercise?> GetExercisesByExerciseIdAsync(int exerciseId) {
             string? connectionString = _configuration.GetConnectionString("DefaultConnection");
@@ -156,43 +123,6 @@ namespace caseStudy.Services
             return null;
         }
 
-        // public Exercise AddExercise(string createdBy, Exercise exercise) {
-        //     try
-        //     {
-        //         var _exercise = new Exercise()
-        //         {
-        //             ExerciseName = exercise.ExerciseName,
-        //             CreatedBy = createdBy,
-        //             CreatedAt = DateTime.Now,
-        //             LastUpdatedBy = createdBy,
-        //             Duration = exercise.Duration,
-        //             LastUpdatedAt = DateTime.Now,
-        //             WorkoutId = exercise.WorkoutId
-        //         };
-        //         _context.Exercises.Add(_exercise);
-        //         _context.SaveChanges();
-        //         return _exercise;
-        //     }
-        //     catch (DbUpdateException ex)
-        //     {
-        //         // Veritabanı güncelleme hatası
-        //         _logger.LogError(ex, "Updating database error");
-        //         throw;
-        //     }
-        //     catch (ValidationException ex)
-        //     {
-        //         // Veri doğrulama hatası
-        //         _logger.LogError(ex, "Validation error");
-        //         throw;
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         // Diğer hatalar
-        //         _logger.LogError(ex, "Error occurred");
-        //         throw;
-        //     }
-        // }
-        
         public async Task<Exercise> AddExerciseAsync(string createdBy, Exercise exercise)
         {
             string connectionString = _configuration.GetConnectionString("DefaultConnection");
@@ -229,31 +159,6 @@ namespace caseStudy.Services
             return exercise; 
         }
 
-        // public Exercise UpdateExercise(int exerciseId, string updatedBy, Exercise exercise)
-        // {
-        //     try
-        //     {
-        //         var _exercise = _context.Exercises.Find(exerciseId);
-        //         if(_exercise != null) {
-        //             _exercise.ExerciseName = exercise.ExerciseName;
-        //             _exercise.CreatedBy = _exercise.CreatedBy;
-        //             _exercise.LastUpdatedBy = updatedBy;
-        //             _exercise.Duration = exercise.Duration;
-        //             _exercise.LastUpdatedAt = DateTime.Now;
-        //             _context.SaveChanges();
-        //         }else {
-        //             _logger.Log($"Exercise with id {exerciseId} not found");
-        //             throw new InvalidOperationException($"Exercise with id {exerciseId} not found");
-        //         }
-        //         return _exercise;
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         _logger.Log($"An error occurred while updating exercise with id {exerciseId}: {ex.Message}");
-        //         throw;
-        //     }
-        // }
-
         public async Task<Exercise> UpdateExerciseAsync(int exerciseId, string updatedBy, Exercise exercise)
         {
             string connectionString = _configuration.GetConnectionString("DefaultConnection");
@@ -289,31 +194,6 @@ namespace caseStudy.Services
             }
         }
 
-        // public void DeleteExercise(int exerciseId)
-        // {
-        //     try
-        //     {
-        //         var _exercise = _context.Exercises.Find(exerciseId);
-        //         if(_exercise != null) {
-        //             _context.Exercises.Remove(_exercise);
-        //             _context.SaveChanges();
-        //         }else {
-        //              _logger.Log($"Exercise with id {exerciseId} not found");
-        //             throw new InvalidOperationException($"Exercise with id {exerciseId} not found");
-        //         }
-        //     }
-        //     catch (DbUpdateException ex)
-        //     {
-        //         _logger.Log($"An error occurred while deleting exercise with id {exerciseId}: {ex.Message}");
-        //         throw;
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         _logger.Log($"An unexpected error occurred while deleting exercise with id {exerciseId}: {ex.Message}");
-        //         throw;
-        //     }
-        // }
-
         public async Task DeleteExerciseAsync(int exerciseId)
         {
             string connectionString = _configuration.GetConnectionString("DefaultConnection");
@@ -342,5 +222,128 @@ namespace caseStudy.Services
                 throw;
             }
         }
+
+            // public List<Exercise> GetExercises() {
+        //     try
+        //     {
+        //         _logger.Log("Getting exercises");
+        //         return _context.Exercises.ToList();
+        //     }
+        //     catch (DbException ex)
+        //     {
+        //         _logger.Log($"An error occurred while getting exercises: {ex.Message}");
+        //         throw;
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         _logger.Log($"An unexpected error occurred while getting exercises: {ex.Message}");
+        //         throw;
+        //     }
+        // }
+        
+        // public Exercise GetExercisesByExerciseId(int exerciseId) {
+        //     try
+        //     {
+        //         var _exercise = _context.Exercises.Find(exerciseId);
+        //         if(_exercise != null) {
+        //             return _exercise;
+        //         }else {
+        //             _logger.Log($"Exercise with id {exerciseId} not found");
+        //             throw new InvalidOperationException($"Exercise with id {exerciseId} not found");
+        //         }
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         _logger.Log($"An error occurred while getting exercise with id {exerciseId}: {ex.Message}");
+        //         throw;
+        //     }
+        // }
+
+        // public Exercise AddExercise(string createdBy, Exercise exercise) {
+        //     try
+        //     {
+        //         var _exercise = new Exercise()
+        //         {
+        //             ExerciseName = exercise.ExerciseName,
+        //             CreatedBy = createdBy,
+        //             CreatedAt = DateTime.Now,
+        //             LastUpdatedBy = createdBy,
+        //             Duration = exercise.Duration,
+        //             LastUpdatedAt = DateTime.Now,
+        //             WorkoutId = exercise.WorkoutId
+        //         };
+        //         _context.Exercises.Add(_exercise);
+        //         _context.SaveChanges();
+        //         return _exercise;
+        //     }
+        //     catch (DbUpdateException ex)
+        //     {
+        //         // Veritabanı güncelleme hatası
+        //         _logger.LogError(ex, "Updating database error");
+        //         throw;
+        //     }
+        //     catch (ValidationException ex)
+        //     {
+        //         // Veri doğrulama hatası
+        //         _logger.LogError(ex, "Validation error");
+        //         throw;
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         // Diğer hatalar
+        //         _logger.LogError(ex, "Error occurred");
+        //         throw;
+        //     }
+        // }
+
+        // public Exercise UpdateExercise(int exerciseId, string updatedBy, Exercise exercise)
+        // {
+        //     try
+        //     {
+        //         var _exercise = _context.Exercises.Find(exerciseId);
+        //         if(_exercise != null) {
+        //             _exercise.ExerciseName = exercise.ExerciseName;
+        //             _exercise.CreatedBy = _exercise.CreatedBy;
+        //             _exercise.LastUpdatedBy = updatedBy;
+        //             _exercise.Duration = exercise.Duration;
+        //             _exercise.LastUpdatedAt = DateTime.Now;
+        //             _context.SaveChanges();
+        //         }else {
+        //             _logger.Log($"Exercise with id {exerciseId} not found");
+        //             throw new InvalidOperationException($"Exercise with id {exerciseId} not found");
+        //         }
+        //         return _exercise;
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         _logger.Log($"An error occurred while updating exercise with id {exerciseId}: {ex.Message}");
+        //         throw;
+        //     }
+        // }
+
+        // public void DeleteExercise(int exerciseId)
+        // {
+        //     try
+        //     {
+        //         var _exercise = _context.Exercises.Find(exerciseId);
+        //         if(_exercise != null) {
+        //             _context.Exercises.Remove(_exercise);
+        //             _context.SaveChanges();
+        //         }else {
+        //              _logger.Log($"Exercise with id {exerciseId} not found");
+        //             throw new InvalidOperationException($"Exercise with id {exerciseId} not found");
+        //         }
+        //     }
+        //     catch (DbUpdateException ex)
+        //     {
+        //         _logger.Log($"An error occurred while deleting exercise with id {exerciseId}: {ex.Message}");
+        //         throw;
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         _logger.Log($"An unexpected error occurred while deleting exercise with id {exerciseId}: {ex.Message}");
+        //         throw;
+        //     }
+        // }
     }
 }
