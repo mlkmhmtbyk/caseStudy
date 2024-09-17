@@ -16,3 +16,6 @@
 17/09/2024 19:54:53 - An unexpected error occurred while getting exercise by id: 'FromSql' or 'SqlQuery' was called with non-composable SQL and with a query composing over it. Consider calling 'AsEnumerable' after the method to perform the composition on the client side.
 17/09/2024 20:56:53 - The SqlParameterCollection only accepts non-null Microsoft.Data.SqlClient.SqlParameter type objects, not System.Data.SqlClient.SqlParameter objects.
 Error occurred
+17/09/2024 23:11:51 - An error occurred while updating exercise with id 9: Egzersiz bulunamadı
+17/09/2024 23:12:24 - An error occurred while deleting exercise with id 11: Exercise with id 11 not found
+17/09/2024 23:12:38 - An error occurred while deleting exercise with id 10: Exercise with id 10 not found

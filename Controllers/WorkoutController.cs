@@ -20,20 +20,6 @@ namespace caseStudy.Controllers
         }
 
         [Authorize]
-        [HttpGet("GetWorkoutsWithoutExercises")]
-        public IActionResult GetWorkouts()
-        {
-            try{
-                var workouts = _workoutsService.GetWorkoutsWithoutExercies();
-                return Ok(workouts);
-            }
-            catch (Exception ex){
-                return StatusCode(500, "Error while getting workouts:" + ex.Message);
-            }
-            
-        }
-
-        [Authorize]
         [HttpGet("GetWorkoutsWithExercises")]
         public IActionResult GetWorkoutsWithExercises()
         {

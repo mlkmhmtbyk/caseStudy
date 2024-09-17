@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using caseStudy.Data;
@@ -18,23 +20,6 @@ namespace caseStudy.Services
         {
             _context = context;
             _logger = logger;
-        }
-
-        public List<Workout> GetWorkoutsWithoutExercies() {
-            try
-            {
-                return _context.Workouts.ToList();
-            }
-            catch (DbException ex)
-            {
-                _logger.Log($"An error occurred while getting exercises: {ex.Message}");
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.Log($"An unexpected error occurred while getting exercises: {ex.Message}");
-                throw;
-            }
         }
 
         public List<Workout> GetWorkoutsWithExercises() {  
