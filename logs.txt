@@ -8,3 +8,4 @@
 17/09/2024 18:26:43 - Getting exercises
 17/09/2024 18:32:54 - User not found
 17/09/2024 18:32:54 - An error occurred while logging in: User not found
+ 
