@@ -8,4 +8,11 @@
 17/09/2024 18:26:43 - Getting exercises
 17/09/2024 18:32:54 - User not found
 17/09/2024 18:32:54 - An error occurred while logging in: User not found
- 
+ 17/09/2024 19:33:24 - User not found
+17/09/2024 19:33:24 - An error occurred while logging in: User not found
+17/09/2024 19:33:40 - Getting exercises
+17/09/2024 19:33:50 - Getting exercises
+17/09/2024 19:39:52 - An unexpected error occurred while getting exercise by id: 'FromSql' or 'SqlQuery' was called with non-composable SQL and with a query composing over it. Consider calling 'AsEnumerable' after the method to perform the composition on the client side.
+17/09/2024 19:54:53 - An unexpected error occurred while getting exercise by id: 'FromSql' or 'SqlQuery' was called with non-composable SQL and with a query composing over it. Consider calling 'AsEnumerable' after the method to perform the composition on the client side.
+17/09/2024 20:56:53 - The SqlParameterCollection only accepts non-null Microsoft.Data.SqlClient.SqlParameter type objects, not System.Data.SqlClient.SqlParameter objects.
+Error occurred

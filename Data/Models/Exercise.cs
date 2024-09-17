@@ -9,7 +9,7 @@ namespace caseStudy.Data.Models
     {
         public int ExerciseId { get; set; }
         public required string ExerciseName { get; set; }
-        public required int Duration { get; set; }
+        public int Duration { get; set; } = 0;
         public DateTime CreatedAt {get; set;} = DateTime.Now;
         public DateTime LastUpdatedAt {get; set;} = DateTime.Now;
         public string? CreatedBy {get; set;}
