@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using caseStudy.Data.Models;
 using caseStudy.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace caseStudy.Controllers
@@ -18,6 +19,7 @@ namespace caseStudy.Controllers
             _workoutsService = workoutsService;
         }
 
+        [Authorize]
         [HttpGet("GetWorkoutsWithoutExercises")]
         public IActionResult GetWorkouts()
         {
@@ -31,6 +33,7 @@ namespace caseStudy.Controllers
             
         }
 
+        [Authorize]
         [HttpGet("GetWorkoutsWithExercises")]
         public IActionResult GetWorkoutsWithExercises()
         {
@@ -43,6 +46,7 @@ namespace caseStudy.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost("AddWorkout/{createdBy}")]
         public IActionResult AddWorkout(string createdBy,[FromBody]Workout workout)
         {
@@ -57,6 +61,7 @@ namespace caseStudy.Controllers
             }
         }        
 
+        [Authorize]
         [HttpGet("GetWorkoutWithId/{workoutId}")]
         public IActionResult GetWorkout(int workoutId)
         {
@@ -72,6 +77,7 @@ namespace caseStudy.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("UpdateWorkout/{workoutId}/{updatedBy}")]
         public IActionResult UpdateWorkout(int workoutId,string updatedBy,[FromBody] Workout workout)
         {
@@ -90,6 +96,7 @@ namespace caseStudy.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("DeleteWorkout/{workoutId}")]
         public IActionResult DeleteWorkout(int workoutId)
         {
@@ -105,6 +112,7 @@ namespace caseStudy.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("FilterWorkoutsWithAnd")]
         public IActionResult FilterWorkoutsWithAnd([FromQuery] string difficultyLevel, [FromQuery] string focusArea, [FromQuery] int totalTime)
         {
@@ -119,6 +127,7 @@ namespace caseStudy.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("FilterWorkoutsWithOr")]
         public IActionResult FilterWorkoutsWithOr([FromQuery] string difficultyLevel, [FromQuery] string focusArea, [FromQuery] int totalTime)
         {

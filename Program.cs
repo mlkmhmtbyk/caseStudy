@@ -1,9 +1,33 @@
+using System.Text;
 using caseStudy.Data;
 using caseStudy.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//JWT configurations starts
+var jwtIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>();
+var jwtKey = builder.Configuration.GetSection("Jwt:Key").Get<string>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+ .AddJwtBearer(options =>
+ {
+     options.TokenValidationParameters = new TokenValidationParameters
+     {
+         ValidateIssuer = true,
+         ValidateAudience = true,
+         ValidateLifetime = true,
+         ValidateIssuerSigningKey = true,
+         ValidIssuer = jwtIssuer,
+         ValidAudience = jwtIssuer,
+         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+     };
+ });
+//JWT configurations ends
+
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<DataContext>(options =>
@@ -14,6 +38,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 //All services goes here
 builder.Services.AddTransient<WorkoutsService>();
 builder.Services.AddTransient<ExercisesService>();
+builder.Services.AddTransient<UsersService>();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -40,6 +65,7 @@ app.UseHttpsRedirection();
 
 app.UseCors("CorsPolicy");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

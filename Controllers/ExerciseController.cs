@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using caseStudy.Data.Models;
 using caseStudy.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace caseStudy.Controllers
@@ -18,6 +19,7 @@ namespace caseStudy.Controllers
             _exercisesService = exercisesService;
         }
 
+        [Authorize]
         [HttpGet("GetExercises")]
         public IActionResult GetExercises()
         {
@@ -31,7 +33,8 @@ namespace caseStudy.Controllers
                 return StatusCode(500, "Error while getting exercises:" + ex.Message);
             }
         }
-
+        
+        [Authorize]
         [HttpGet("GetExercisesByExerciseId/{exerciseId}")]
         public IActionResult GetExercisesByExerciseId(int exerciseId)
         {
@@ -46,6 +49,7 @@ namespace caseStudy.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost("AddExercise/{createdBy}")]
         public IActionResult AddExercise(string createdBy, [FromBody] Exercise exercise)
         {
@@ -60,6 +64,7 @@ namespace caseStudy.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("UpdateExercise/{exerciseId}/{updatedBy}")]
         public IActionResult UpdateExercise(int exerciseId, string updatedBy, [FromBody] Exercise exercise)
         {
@@ -78,6 +83,7 @@ namespace caseStudy.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("DeleteExercise/{exerciseId}")]
         public IActionResult DeleteExercise(int exerciseId)
         {
